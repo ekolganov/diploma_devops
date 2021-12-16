@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <title>{{ mytitle }}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="static/scripts.js"></script>
+
+    <body>
+        <h2>NHL. Enterprise Center arena games stat</h2>
+        Start Date: <input type="date" name="date_start" id="date_start_id" value="2021-02-01"/><br /><br />
+        End Date: <input type="date" name="date_end" id="date_end_id" value="2021-03-01"/><br /><br />
+
+        <!-- AJAX script button, POST request to backend -->
+        <input type="button" onClick="send_data('{{ backend_uri }}')" value="Get over here" />
+
+    </body>
+</html>
