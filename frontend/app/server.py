@@ -1,6 +1,11 @@
 from flask import Flask, render_template, send_from_directory
 import os
 
+
+# BACKEND_URI = http://ipaddr:port/
+ENV_BACKEND_URI = os.environ.get("ENV_BACKEND_URI")
+POD_NAME = os.environ.get("POD_NAME")
+
 app = Flask(__name__)
 
 
@@ -8,13 +13,7 @@ app = Flask(__name__)
 def get_data():
     """ Render main page and static content """
 
-    return render_template("base.html", mytitle="NHL Stats", backend_uri="http://192.168.0.108:5000/")
-
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return render_template("base.html", mytitle="NHL Stats", backend_uri=ENV_BACKEND_URI, pod_name=POD_NAME)
 
 
 def main():

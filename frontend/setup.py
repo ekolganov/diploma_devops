@@ -19,6 +19,5 @@ setup(
     },
     include_package_data=True,
     install_requires=parse_requirements_file('requirements.txt'),
-    data_files=[('static', ['app/static/favicon.ico', 'app/static/scripts.js']),
-                ('templates', ['app/templates/base.html'])],
+    data_files=[('templates', ['app/templates/base.html'])],
 )

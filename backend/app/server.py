@@ -8,10 +8,15 @@ import psycopg2
 import os
 
 
-class Config(object):
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:testpassword@192.168.0.108:5432/postgres"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+PG_DB = os.environ.get("ENV_POSTGRES_DB"),
+PG_USER = os.environ.get("ENV_POSTGRES_USER"),
+PG_PSWD = os.environ.get("ENV_POSTGRES_PASSWORD"),
+PG_HOST = os.environ.get("ENV_POSTGRES_HOST") # ipaddr/hostname
 
+
+class Config(object):
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{PG_USER}:{PG_PSWD}@{PG_HOST}:5432/{PG_DB}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -20,14 +25,10 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 con = psycopg2.connect(
-    #database=os.environ.get("POSTGRES_DB"),
-    #user=os.environ.get("POSTGRES_USER"),
-    #password=os.environ.get("POSTGRES_PASSWORD"),
-    #host="postgres"
-    database="postgres",
-    user="postgres",
-    password="testpassword",
-    host="192.168.0.108"
+    database=PG_DB,
+    user=PG_USER,
+    password=PG_PSWD,
+    host=PG_HOST
     )
 cur = con.cursor()
 

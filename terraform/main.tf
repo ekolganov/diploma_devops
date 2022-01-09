@@ -123,7 +123,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 }
 
-
+/*
 # Jenkins vm
 resource "azurerm_public_ip" "public_ip" {
   name                = "public_ip_jenkins"
@@ -229,3 +229,4 @@ resource "azurerm_linux_virtual_machine" "jenkins" {
     source = "terraform"
   }
 }
+*/
