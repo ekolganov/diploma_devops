@@ -139,5 +139,9 @@ def nhl_api_do_request(_ds: str, _de: str):
     return
 
 
+def main():
+    app.run(host='0.0.0.0', port=80)
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    main()

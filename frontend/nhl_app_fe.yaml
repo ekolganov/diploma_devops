@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        app: frontend
+    name: nhl-app-fe-deployment
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            app: frontend
+    template:
+        metadata:
+            labels:
+                app: frontend
+        spec:
+            containers:
+            - name: nhl-app-fe
+              image: karamel32/nhl_app:0.0.2
+              ports:
+              - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: nhl-app-fe-svc
+spec:
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+        app: frontend
+    type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: nhl-app-fe-ingress
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+    ingressClassName: nginx
+    rules:
+    - http:
+        paths:
+        - path: /nhl_app
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: nhl-app-fe-svc
+              port:
+                number: 80

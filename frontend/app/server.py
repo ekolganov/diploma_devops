@@ -17,5 +17,9 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-if __name__ == "__main__":
+def main():
     app.run(host='0.0.0.0', port=80)
+
+
+if __name__ == "__main__":
+    main()
