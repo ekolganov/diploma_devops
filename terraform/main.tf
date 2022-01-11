@@ -123,6 +123,64 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 }
 
+
+
+# PGSQL
+resource "azurerm_postgresql_server" "ekpgsql" {
+  name                = "ek-psqlserver"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+
+  sku_name = "B_Gen5_1"
+  
+  storage_mb            = 5120
+  backup_retention_days = 7
+  geo_redundant_backup_enabled  = false
+
+  administrator_login          = var.pg_admin_name
+  administrator_login_password = var.pg_admin_pswd
+  version                      = "11"
+  ssl_enforcement_enabled      = false
+  
+  public_network_access_enabled = true
+
+}
+
+
+resource "azurerm_postgresql_database" "dbprod" {
+  name                = "dbprod"
+  resource_group_name = azurerm_resource_group.rg.name
+  server_name         = azurerm_postgresql_server.ekpgsql.name
+  charset             = "UTF8"
+  collation           = "English_United States.1252"
+}
+
+
+resource "azurerm_postgresql_database" "dbdev" {
+  name                = "dbdev"
+  resource_group_name = azurerm_resource_group.rg.name
+  server_name         = azurerm_postgresql_server.ekpgsql.name
+  charset             = "UTF8"
+  collation           = "English_United States.1252"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 # Jenkins vm
 resource "azurerm_public_ip" "public_ip" {

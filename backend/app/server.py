@@ -15,7 +15,7 @@ PG_HOST = os.environ.get("ENV_POSTGRES_HOST") # ipaddr/hostname
 
 
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = f"postgresql://{PG_USER}:{PG_PSWD}@{PG_HOST}:5432/{PG_DB}"
+    SQLALCHEMY_DATABASE_URI = "postgresql://my_pgadmin@ek-psqlserver.postgres.database.azure.com:root123A@ek-psqlserver.postgres.database.azure.com:5432/dbprod"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 app = Flask(__name__)
@@ -24,13 +24,14 @@ CORS(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-con = psycopg2.connect(
-    database=PG_DB,
-    user=PG_USER,
-    password=PG_PSWD,
-    host=PG_HOST
-    )
-cur = con.cursor()
+#con = psycopg2.connect(
+#    dbname=PG_DB,
+#    user=f"{PG_USER}@{PG_HOST}",
+#    password=PG_PSWD,
+#    host=PG_HOST,
+#    sslmode="require"
+#    )
+#cur = con.cursor()
 
 
 class Games(db.Model):
@@ -136,12 +137,25 @@ def nhl_api_do_request(_ds: str, _de: str):
                                  )
                     db.session.add(data)
                     db.session.commit()
-    con.rollback()
     return
 
 
+def create_cursor():
+    con = psycopg2.connect(
+        dbname="dbprod",
+        user="my_pgadmin@ek-psqlserver.postgres.database.azure.com",
+        password="root123A",
+        host="ek-psqlserver.postgres.database.azure.com",
+        sslmode="require"
+        )
+    _cur = con.cursor()
+    return _cur
+
+
 def main():
-    app.run(host='0.0.0.0', port=80)
+    global cur
+    cur = create_cursor()
+    app.run(host='0.0.0.0', port=5000)
 
 
 if __name__ == "__main__":
