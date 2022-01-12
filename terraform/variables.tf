@@ -19,6 +19,6 @@ variable "pg_admin_name" {
 }
 
 variable "pg_admin_pswd" {
-  default = "root123!"
+  default = "root123A"
 }
 

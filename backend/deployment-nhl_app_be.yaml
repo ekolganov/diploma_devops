@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nhl-app-be-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: nhl-app-be
+        image: karamel32/nhl_app_be:0.0.23
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 5000
+        envFrom:
+          - secretRef:
+              name: be-secret
+        resources:
+          requests:
+            cpu: 300m
+            memory: 500Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+      initContainers:
+      - name: init-db
+        image: karamel32/nhl_app_be:0.0.23
+        command: ['/bin/sh']
+        args: ['-c', "rm -Rf /my-app/migrations/lost+found; flask db init; flask db migrate; flask db upgrade"]
+#        env:
+#        - name: FLASK_APP
+#          value: app:app
+        envFrom:
+        - secretRef:
+            name: be-secret
+        volumeMounts:
+        - name: flask-pvc
+          mountPath: /my-app/migrations
+      volumes:
+      - name: flask-pvc
+        persistentVolumeClaim:
+          claimName: flask-pvc

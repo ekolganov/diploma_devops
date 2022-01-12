@@ -5,11 +5,13 @@ echo "SET VERSION IMAGE !!!!!!"
 exit 1
 fi
 
+de_file=deployment-nhl_app_be.yaml
+
 source ~/.bashrc
 cd ~/diploma_devops/backend
-#kubectl delete -f nhl_app_be.yaml
+#kubectl delete -f $de_file
 docker build -t karamel32/nhl_app_be:$1 .
 docker push karamel32/nhl_app_be:$1
-sed -i "s/nhl_app_be:[0-9]\+\.[0-9]\+\.[0-9]\+/nhl_app_be:$1/g" nhl_app_be.yaml
-kubectl apply -f nhl_app_be.yaml
-kubectl get ing -w
+sed -i "s/nhl_app_be:[0-9]\+\.[0-9]\+\.[0-9]\+/nhl_app_be:$1/g" $de_file
+kubectl apply -f $de_file
+kubectl get po -w

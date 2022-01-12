@@ -5,13 +5,16 @@ import requests
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import psycopg2
+from psycopg2.errorcodes import UNDEFINED_TABLE
+from psycopg2 import errors
 import os
+
 
 
 PG_DB = os.environ.get("ENV_POSTGRES_DB"),
 PG_USER = os.environ.get("ENV_POSTGRES_USER"),
 PG_PSWD = os.environ.get("ENV_POSTGRES_PASSWORD"),
-PG_HOST = os.environ.get("ENV_POSTGRES_HOST") # ipaddr/hostname
+PG_HOST = os.environ.get("ENV_POSTGRES_HOST")
 
 
 class Config(object):
@@ -23,15 +26,6 @@ app.config.from_object(Config)
 CORS(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-#con = psycopg2.connect(
-#    dbname=PG_DB,
-#    user=f"{PG_USER}@{PG_HOST}",
-#    password=PG_PSWD,
-#    host=PG_HOST,
-#    sslmode="require"
-#    )
-#cur = con.cursor()
 
 
 class Games(db.Model):
@@ -46,8 +40,10 @@ class Games(db.Model):
     teams = db.Column(db.String())
     score = db.Column(db.String())
     stars = db.Column(db.String())
+    test = db.Column(db.Integer, autoincrement=True)
 
-    def __init__(self, id, game_id, link, date, teams, score, stars):
+#    def __init__(self, id, game_id, link, date, teams, score, stars):
+    def __init__(self, id, game_id, link, date, teams, score, stars, test):
         self.id = id
         self.game_id = game_id
         self.link = link
@@ -55,6 +51,7 @@ class Games(db.Model):
         self.teams = teams
         self.score = score
         self.stars = stars
+        self.test = test
 
 
 @app.route("/", methods=['POST'])
@@ -92,10 +89,15 @@ def nhl_api_do_request(_ds: str, _de: str):
     """
 
     def _get_exist_games_id() -> set:
-        cur.execute("SELECT game_id from nhl_games")
-        rows = cur.fetchall()
-        _exist_games_id = set(i for sub in rows for i in sub)
-        return _exist_games_id
+        try:
+            cur.execute("SELECT game_id from nhl_games")
+            rows = cur.fetchall()
+            _exist_games_id = set(i for sub in rows for i in sub)
+            return _exist_games_id
+        except errors.lookup(UNDEFINED_TABLE):
+            cur.execute("rollback")
+            print("table not exist")
+            return set()
 
     def _nhl_api_search_game_stars(_link_game: str) -> str:
         """ Return 1st, 2nd, 3d game stars """
@@ -133,7 +135,8 @@ def nhl_api_do_request(_ds: str, _de: str):
                                  date=game['gameDate'],
                                  teams=teams,
                                  score=score,
-                                 stars=game_stars
+                                 stars=game_stars,
+                                 test=1
                                  )
                     db.session.add(data)
                     db.session.commit()

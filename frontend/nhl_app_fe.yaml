@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nhl-app-fe
-        image: karamel32/nhl_app:0.0.6
+        image: karamel32/nhl_app:0.0.7
         imagePullPolicy: Always 
         ports:
         - containerPort: 80
