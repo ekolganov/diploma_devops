@@ -30,35 +30,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nhl-app-fe-svc
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-      app: frontend
-  type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: nhl-app-fe-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: nginx
-  rules:
-  - http:
-      paths:
-      - path: /(nhl_app|favicon.ico)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: nhl-app-fe-svc
-            port:
-              number: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 300Mi
+          limits:
+            cpu: 300m
+            memory: 300Mi
