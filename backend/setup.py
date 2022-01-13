@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 import app
+import os
 
 
 def parse_requirements_file(requirements_path):

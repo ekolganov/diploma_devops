@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nhl-app-be
-        image: karamel32/nhl_app_be:0.0.23
+        image: karamel32/nhl_app_be:0.0.28
         imagePullPolicy: Always 
         ports:
         - containerPort: 5000
@@ -32,7 +32,7 @@ spec:
             memory: 500Mi
       initContainers:
       - name: init-db
-        image: karamel32/nhl_app_be:0.0.23
+        image: karamel32/nhl_app_be:0.0.28
         command: ['/bin/sh']
         args: ['-c', "rm -Rf /my-app/migrations/lost+found; flask db init; flask db migrate; flask db upgrade"]
 #        env:

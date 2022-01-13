@@ -4,16 +4,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 
-__version__ = '0.0.21'
+__version__ = '0.0.22'
 
-PG_DB = os.environ.get("ENV_POSTGRES_DB"),
-PG_USER = os.environ.get("ENV_POSTGRES_USER"),
-PG_PSWD = os.environ.get("ENV_POSTGRES_PASSWORD"),
+PG_DB = os.environ.get("ENV_POSTGRES_DB")
+PG_USER = os.environ.get("ENV_POSTGRES_USER")
+PG_PSWD = os.environ.get("ENV_POSTGRES_PASSWORD")
 PG_HOST = os.environ.get("ENV_POSTGRES_HOST")
 
-
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = "postgresql://my_pgadmin@ek-psqlserver.postgres.database.azure.com:root123A@ek-psqlserver.postgres.database.azure.com:5432/dbprod"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{PG_USER}:{PG_PSWD}@{PG_HOST}:5432/{PG_DB}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
@@ -36,10 +35,10 @@ class Games(db.Model):
     teams = db.Column(db.String())
     score = db.Column(db.String())
     stars = db.Column(db.String())
-    test = db.Column(db.Integer, autoincrement=True)
+#    test = db.Column(db.Integer, autoincrement=True)
 
-#    def __init__(self, id, game_id, link, date, teams, score, stars):
-    def __init__(self, id, game_id, link, date, teams, score, stars, test):
+    def __init__(self, id, game_id, link, date, teams, score, stars):
+#    def __init__(self, id, game_id, link, date, teams, score, stars, test):
         self.id = id
         self.game_id = game_id
         self.link = link
@@ -47,4 +46,4 @@ class Games(db.Model):
         self.teams = teams
         self.score = score
         self.stars = stars
-        self.test = test
+#        self.test = test

@@ -11,14 +11,14 @@ import os
 
 
 
-PG_DB = os.environ.get("ENV_POSTGRES_DB"),
-PG_USER = os.environ.get("ENV_POSTGRES_USER"),
-PG_PSWD = os.environ.get("ENV_POSTGRES_PASSWORD"),
+PG_DB = os.environ.get("ENV_POSTGRES_DB")
+PG_USER = os.environ.get("ENV_POSTGRES_USER")
+PG_PSWD = os.environ.get("ENV_POSTGRES_PASSWORD")
 PG_HOST = os.environ.get("ENV_POSTGRES_HOST")
 
 
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = "postgresql://my_pgadmin@ek-psqlserver.postgres.database.azure.com:root123A@ek-psqlserver.postgres.database.azure.com:5432/dbprod"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{PG_USER}:{PG_PSWD}@{PG_HOST}:5432/{PG_DB}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 app = Flask(__name__)
@@ -40,10 +40,10 @@ class Games(db.Model):
     teams = db.Column(db.String())
     score = db.Column(db.String())
     stars = db.Column(db.String())
-    test = db.Column(db.Integer, autoincrement=True)
+#    test = db.Column(db.Integer, autoincrement=True)
 
-#    def __init__(self, id, game_id, link, date, teams, score, stars):
-    def __init__(self, id, game_id, link, date, teams, score, stars, test):
+    def __init__(self, id, game_id, link, date, teams, score, stars):
+#    def __init__(self, id, game_id, link, date, teams, score, stars, test):
         self.id = id
         self.game_id = game_id
         self.link = link
@@ -51,7 +51,7 @@ class Games(db.Model):
         self.teams = teams
         self.score = score
         self.stars = stars
-        self.test = test
+#        self.test = test
 
 
 @app.route("/", methods=['POST'])
@@ -135,8 +135,8 @@ def nhl_api_do_request(_ds: str, _de: str):
                                  date=game['gameDate'],
                                  teams=teams,
                                  score=score,
-                                 stars=game_stars,
-                                 test=1
+                                 stars=game_stars
+#                                 test=1
                                  )
                     db.session.add(data)
                     db.session.commit()
@@ -145,10 +145,10 @@ def nhl_api_do_request(_ds: str, _de: str):
 
 def create_cursor():
     con = psycopg2.connect(
-        dbname="dbprod",
-        user="my_pgadmin@ek-psqlserver.postgres.database.azure.com",
-        password="root123A",
-        host="ek-psqlserver.postgres.database.azure.com",
+        dbname=PG_DB,
+        user=PG_USER,
+        password=PG_PSWD,
+        host=PG_HOST,
         sslmode="require"
         )
     _cur = con.cursor()
@@ -156,6 +156,7 @@ def create_cursor():
 
 
 def main():
+    print(PG_PSWD,PG_USER,PG_HOST,PG_DB)
     global cur
     cur = create_cursor()
     app.run(host='0.0.0.0', port=5000)
