@@ -1,16 +1,21 @@
----
-apiVersion: v1
-kind: Service
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: nhl-app-fe-svc
+  name: nhl-app-fe-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-      app: frontend
-  type: ClusterIP
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /(nhl_app|favicon.ico)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: nhl-app-fe-svc
+            port:
+              number: 80
 ---
 apiVersion: v1
 kind: Service

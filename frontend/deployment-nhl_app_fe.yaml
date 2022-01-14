@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nhl-app-fe
-        image: karamel32/nhl_app:0.0.7
+        image: karamel32/nhl_app:0.1.0
         imagePullPolicy: Always 
         ports:
         - containerPort: 80
@@ -32,8 +32,8 @@ spec:
                 fieldPath: metadata.name
         resources:
           requests:
-            cpu: 100m
+            cpu: 200m
             memory: 300Mi
           limits:
-            cpu: 300m
-            memory: 300Mi
+            cpu: 500m
+            memory: 500Mi
