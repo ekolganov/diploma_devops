@@ -35,9 +35,6 @@ spec:
         image: karamel32/nhl_app_be:0.0.30
         command: ['/bin/sh']
         args: ['-c', "rm -Rf /my-app/migrations/lost+found; flask db init; flask db migrate; flask db upgrade"]
-#        env:
-#        - name: FLASK_APP
-#          value: app:app
         envFrom:
         - secretRef:
             name: be-secret

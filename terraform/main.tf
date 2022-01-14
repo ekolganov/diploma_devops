@@ -124,7 +124,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 }
 
 
-/*
+#/*
 # PGSQL
 resource "azurerm_postgresql_server" "ekpgsql" {
   name                = "ek-psqlserver"
@@ -163,7 +163,7 @@ resource "azurerm_postgresql_database" "dbdev" {
   charset             = "UTF8"
   collation           = "English_United States.1252"
 }
-*/
+#*/
 
 
 
