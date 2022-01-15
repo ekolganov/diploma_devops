@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nhl-app-fe-deployment
+  namespace: dev
   labels:
     app: frontend
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nhl-app-fe
-        image: karamel32/nhl_app:0.1.0
+        image: karamel32/nhl_app:0.1.1
         imagePullPolicy: Always 
         ports:
         - containerPort: 80

@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: fe-configmap
 data:
-  env_app_flask: "app/server.py"
+  env_backend_uri: "/nhl-app-be-dev"
