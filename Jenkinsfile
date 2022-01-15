@@ -2,7 +2,7 @@ pipeline {
     agent {
          // use kube agent to start build pod in kubernetes
         kubernetes {
-                yamlFile: "jenkins-agent.yaml"
+                yamlFile "jenkins-agent.yaml"
             }
         }
     
@@ -19,7 +19,7 @@ pipeline {
         githubCred = "github"
         githubRepoName = "https://github.com/karamel32/diploma_devops.git"
         githubBuildAppPath = "frontend"
-        githubBuildBranch = "main"
+        githubBuildBranch = "dev"
         
         deploymentYaml = "./k8s/fe-deployment-nhl_app.yaml"
     }
