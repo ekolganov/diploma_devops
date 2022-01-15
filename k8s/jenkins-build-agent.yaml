@@ -4,10 +4,12 @@ metadata:
 spec:
   containers:
   - name: docker
-    image: docker:19.03.1-dind
+    image: docker:19.03.13-dind
+    command:
+    - dockerd
+    args:
+    - --host=unix:///var/run/docker.sock
+    - --storage-driver=overlay
+    tty: true
     securityContext:
       privileged: true
-    env:
-      - name: DOCKER_TLS_CERTDIR
-        value: ""
-    tty: true
