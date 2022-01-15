@@ -3,24 +3,11 @@ metadata:
     some-label: pod-runner
 spec:
   containers:
-  - name: jnlp
-    env:
-    - name: CONTAINER_ENV_VAR
-      value: jnlp
-    - name: JENKINS_URL
-      value: http://jenkins
-  - name: python
-    image: python:3.9.0-alpine3.12
-    command:
-    - cat
-    tty: true
   - name: docker
-    image: docker:19.03.13-dind
-    command:
-    - dockerd 
-    args:
-    - --host=unix:///var/run/docker.sock
-    - --storage-driver=overlay
-    tty: true
+    image: docker:19.03.1-dind
     securityContext:
       privileged: true
+    env:
+      - name: DOCKER_TLS_CERTDIR
+        value: ""
+    tty: true
