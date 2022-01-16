@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nhl-app-be-deployment
-  namespace: main
+  namespace: __NAMESPACE__
   labels:
     app: backend
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nhl-app-be
-        image: karamel32/nhl_app_be:0.1.0
+        image: karamel32/nhl_app_be:__BUILD_VERSION__
         imagePullPolicy: Always 
         ports:
         - containerPort: 5000
@@ -33,7 +33,7 @@ spec:
             memory: 500Mi
       initContainers:
       - name: init-db
-        image: karamel32/nhl_app_be:0.1.0
+        image: karamel32/nhl_app_be:__BUILD_VERSION__
         command: ['/bin/sh']
         args: ['-c', "rm -Rf /my-app/migrations/lost+found; flask db init; flask db migrate; flask db upgrade"]
         envFrom:
