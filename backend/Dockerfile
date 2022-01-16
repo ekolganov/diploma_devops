@@ -1,6 +1,6 @@
 FROM python:3.9.0-alpine3.12 
 
-EXPOSE 80/tcp
+EXPOSE 5000/tcp
 
 WORKDIR /my-app
 COPY setup.py .
