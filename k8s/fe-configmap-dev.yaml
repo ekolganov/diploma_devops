@@ -4,4 +4,4 @@ metadata:
   name: fe-configmap
   namespace: dev
 data:
-  env_backend_uri: "/nhl-app-be-dev"
+  env_backend_uri: "/dev-nhl-app-be"

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nhl-app-fe-ingress
+  name: nhl-app-fe-ingress-main
   namespace: main
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -10,7 +10,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /(nhl_app|favicon.ico)
+      - path: /(main_nhl_app|favicon.ico)
         pathType: ImplementationSpecific
         backend:
           service:

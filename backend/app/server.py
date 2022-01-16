@@ -156,7 +156,6 @@ def create_cursor():
 
 
 def main():
-    print(PG_PSWD,PG_USER,PG_HOST,PG_DB)
     global cur
     cur = create_cursor()
     app.run(host='0.0.0.0', port=5000)

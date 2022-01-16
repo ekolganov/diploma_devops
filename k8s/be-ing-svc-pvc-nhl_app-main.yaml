@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nhl-app-be-ingress
+  name: nhl-app-be-ingress-main
   namespace: main
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -11,7 +11,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /nhl-app-be
+      - path: /main-nhl-app-be
         pathType: Prefix
         backend:
           service:
