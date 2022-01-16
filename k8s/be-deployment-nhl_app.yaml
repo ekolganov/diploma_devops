@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nhl-app-be-deployment
+  namespace: main
   labels:
     app: backend
 spec:

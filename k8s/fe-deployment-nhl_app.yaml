@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nhl-app-fe-deployment
-  namespace: dev
+  namespace: main
   labels:
     app: frontend
 spec:
