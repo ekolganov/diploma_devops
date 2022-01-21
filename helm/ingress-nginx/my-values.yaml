@@ -1,0 +1,18 @@
+controller:
+  config:
+    compute-full-forwarded-for: "true"
+    use-forwarded-headers: "true"
+    proxy-body-size: "0"    
+  replicaCount: 1
+  service:
+    annotations:
+      service.beta.kubernetes.io/azure-dns-label-name: ekolganov1
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        release: monitoring
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: monitoring

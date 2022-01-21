@@ -5,6 +5,7 @@ import requests
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import psycopg2
+from prometheus_flask_exporter import PrometheusMetrics
 from psycopg2.errorcodes import UNDEFINED_TABLE
 from psycopg2 import errors
 import os
@@ -26,6 +27,14 @@ app.config.from_object(Config)
 CORS(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+metrics = PrometheusMetrics(app)
+
+metrics.register_default(
+    metrics.counter(
+        'by_path_counter', 'Request count by request paths',
+        labels={'path': lambda: request.path}
+    )
+)
 
 
 class Games(db.Model):

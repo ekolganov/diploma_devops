@@ -8,7 +8,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - http:
+  - host: "ekolganov1.eastus.cloudapp.azure.com"
+    http:
       paths:
       - path: /dev_nhl_app
         pathType: ImplementationSpecific

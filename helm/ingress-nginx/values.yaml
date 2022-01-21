@@ -397,7 +397,7 @@ controller:
       # Custom annotations for ScaledObject resource
       #  annotations:
       # key: value
-    triggers: []
+ #   triggers: []
  #     - type: prometheus
  #       metadata:
  #         serverAddress: http://<prometheus-host>:9090
@@ -628,12 +628,12 @@ controller:
   metrics:
     port: 10254
     # if this port is changed, change healthz-port: in extraArgs: accordingly
-    enabled: false
+    enabled: true
 
     service:
-      annotations: {}
-      # prometheus.io/scrape: "true"
-      # prometheus.io/port: "10254"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "10254"
 
       # clusterIP: ""
 
@@ -650,16 +650,18 @@ controller:
       # nodePort: ""
 
     serviceMonitor:
-      enabled: false
-      additionalLabels: {}
+      enabled: true
+      additionalLabels:
+        release: prometheus
+      #  app.kubernetes.io/name: ingress-nginx
       # The label to use to retrieve the job name from.
-      # jobLabel: "app.kubernetes.io/name"
+      #  jobLabel: "app.kubernetes.io/name"
       namespace: ""
-      namespaceSelector: {}
+      #namespaceSelector:
       # Default: scrape .Release.Namespace only
       # To scrape all, use the following:
-      # namespaceSelector:
-      #   any: true
+      namespaceSelector:
+        any: true
       scrapeInterval: 30s
       # honorLabels: true
       targetLabels: []

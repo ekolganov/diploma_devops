@@ -5,13 +5,16 @@ metadata:
   namespace: main
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+  labels:
+    release: monitoring
 spec:
   ingressClassName: nginx
   rules:
-  - http:
+  - host: "ekolganov1.eastus.cloudapp.azure.com"
+    http:
       paths:
       - path: /(main_nhl_app|favicon.ico)
-        pathType: ImplementationSpecific
+        pathType: Prefix
         backend:
           service:
             name: nhl-app-fe-svc

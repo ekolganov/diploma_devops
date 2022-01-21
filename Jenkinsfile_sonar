@@ -1,0 +1,21 @@
+node {
+    withEnv([
+        "GIT_CRED_ID=github",
+        "GIT_REPO=https://github.com/karamel32/diploma_devops",
+        ])
+    {
+        stage ('Checout'){
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']],
+            extensions: [[$class: 'CleanBeforeCheckout', deleteUntrackedNestedRepositories: true]],
+            userRemoteConfigs: [[credentialsId: env.GIT_CRED_ID, url: env.GIT_REPO]]])
+        
+            }
+        stage('SonarQube Analysis') {
+            // sonar-scaner - installed SonarQube Scanner in /jenkins/configureTools/
+            def scannerHome = tool name: 'sonar-scaner';
+            withSonarQubeEnv() {
+              sh "${scannerHome}/bin/sonar-scanner"
+            }
+        }
+    }
+}

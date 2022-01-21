@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_from_directory
+from prometheus_flask_exporter import PrometheusMetrics
 import os
 
 
@@ -7,6 +8,14 @@ ENV_BACKEND_URI = os.environ.get("ENV_BACKEND_URI")
 POD_NAME = os.environ.get("POD_NAME")
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+
+metrics.register_default(
+    metrics.counter(
+        'by_path_counter', 'Request count by request paths',
+        labels={'path': lambda: request.path}
+    )
+)
 
 
 @app.route("/", methods=['GET'])

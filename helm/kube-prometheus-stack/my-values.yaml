@@ -1,0 +1,53 @@
+# to install this values:
+# pull repo helm pull prometheus-community/kube-prometheus-stack
+# unpack and cd
+# helm install monitoring . --values my-values.yaml --namespace monitoring
+grafana:
+   adminPassword: EKolganov
+   grafana.ini:
+     server:
+       domain: []
+       root_url: "%(protocol)s://%(domain)s/grafana"
+       serve_from_sub_path: true
+   ingress:
+     enabled: true
+     ingressClassName: nginx
+     hosts:
+       - ekolganov1.eastus.cloudapp.azure.com
+     annotations:
+       nginx.ingress.kubernetes.io/rewrite-target: /$1
+       nginx.ingress.kubernetes.io/use-regex: "true"
+     path: /grafana/?(.*)
+     pathType: Prefix
+prometheus:
+  ingress:  
+    enabled: true
+    hosts:
+      - ekolganov1.eastus.cloudapp.azure.com
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    paths:
+      - /prometheus/?(.*)
+    pathType: Prefix
+  prometheusSpec:
+    externalUrl: "prometheus"
+#    additionalScrapeConfigs:
+#      - job_name: 'ingress-nginx-endpoints'
+#        metric_path: /metrics
+#        scrape_interval: 5s
+#        static_configs:
+#          - targets:
+#            - ingress-nginx-controller-metrics.ingress-nginx:10254
+defaultRules:
+  rules:
+    etcd: false
+    kubeScheduler: false
+kubeControllerManager:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false

@@ -648,31 +648,23 @@ grafana:
   ##
   defaultDashboardsTimezone: utc
 
-  adminPassword: root123A
+  adminPassword: prom-operator
 
   rbac:
     ## If true, Grafana PSPs will be created
     ##
     pspEnabled: false
 
-  grafana.ini:
-    server:
-      domain: []
-      root_url: "%(protocol)s://%(domain)s/grafana"
-      serve_from_sub_path: true
-
   ingress:
     ## If true, Grafana Ingress will be created
     ##
-    enabled: true
-    ingressClassName: nginx
+    enabled: false
+
     ## Annotations for Grafana Ingress
     ##
-    annotations: 
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/rewrite-target: /$1
-      nginx.ingress.kubernetes.io/use-regex: "true"
-    # kubernetes.io/tls-acme: "true"
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
 
     ## Labels to be added to the Ingress
     ##
@@ -682,13 +674,12 @@ grafana:
     ## Must be provided if Ingress is enable.
     ##
     # hosts:
-    #   - /
+    #   - grafana.domain.com
     hosts: []
-    #  - 20.85.198.38
 
     ## Path for grafana ingress
-    path: /grafana/?(.*)
-    pathType: ImplementationSpecific
+    path: /
+
     ## TLS configuration for grafana Ingress
     ## Secret must be manually created in the namespace
     ##
@@ -1946,21 +1937,13 @@ prometheus:
   #     someoneelse:$apr1$DMZX2Z4q$6SbQIfyuLQd.xmo/P0m2c.
 
   ingress:
-    enabled: true
+    enabled: false
 
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    ingressClassName: nginx
-    
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-      nginx.ingress.kubernetes.io/use-regex: "true"
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-#      kubernetes.io/ingress.class: azure/application-gateway
-#      appgw.ingress.kubernetes.io/backend-protocol: http
+    # ingressClassName: nginx
 
-    
+    annotations: {}
     labels: {}
 
     ## Hostnames.
@@ -1972,12 +1955,12 @@ prometheus:
 
     ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefix
     ##
-    paths: 
-      - /prometheus(/|$)(.*)
+    paths: []
+    # - /
 
     ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
     ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
-    pathType: ImplementationSpecific
+    # pathType: ImplementationSpecific
 
     ## TLS configuration for Prometheus Ingress
     ## Secret must be manually created in the namespace
@@ -2179,7 +2162,7 @@ prometheus:
 
     ## External URL at which Prometheus will be reachable.
     ##
-    externalUrl: "prometheus"
+    externalUrl: ""
 
     ## Define which Nodes the Pods are scheduled on.
     ## ref: https://kubernetes.io/docs/user-guide/node-selection/
