@@ -8,7 +8,9 @@ COPY requirements.txt .
 COPY app ./app
 RUN pip3 install --no-cache-dir --upgrade pip && \
     pip3 install flask && \
-    pip3 install psycopg2-binary
+    pip3 install psycopg2-binary && \
+    pip3 intsall prometheus-flask-exporter
+
 RUN python3 setup.py bdist_wheel
 RUN pip3 install dist/nhl_stat_app_fe*.whl
 
