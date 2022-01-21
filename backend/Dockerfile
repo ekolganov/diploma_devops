@@ -8,7 +8,7 @@ COPY requirements.txt .
 COPY app ./app
 RUN pip3 install --no-cache-dir --upgrade pip && \
     pip3 install --no-cache-dir flask psycopg2-binary Flask-Cors requests Flask-SQLAlchemy Flask-Migrate && \
-    pip3 intsall --no-cache-dir prometheus-flask-exporter
+    pip3 install --no-cache-dir prometheus_flask_exporter
 RUN python3 setup.py bdist_wheel
 RUN pip3 install dist/nhl_stat_app_be*.whl
 
