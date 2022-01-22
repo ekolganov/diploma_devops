@@ -5,17 +5,19 @@ metadata:
   labels:
       release: monitoring
       app: frontend
-      app: backend
+      instance: app
+      component: frontend    
   namespace: monitoring
 spec:
-  jobLabel: nhl-apps-metrics
   endpoints:
-  - port: http
-    interval: 15s
+  - path: /metrics
+    port: http
+    interval: 30s
   selector:
     matchLabels:
       app: frontend
-      app: backend
+      instance: app
+      component: frontend
   namespaceSelector:
     matchNames:
     - main

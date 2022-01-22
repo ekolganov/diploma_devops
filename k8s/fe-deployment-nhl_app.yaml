@@ -5,15 +5,21 @@ metadata:
   namespace: __NAMESPACE__
   labels:
     app: frontend
+    instance: app
+    component: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: frontend
+      instance: app
+      component: frontend
   template:
     metadata:
       labels:
         app: frontend
+        instance: app
+        component: frontend
     spec:
       containers:
       - name: nhl-app-fe
@@ -21,6 +27,7 @@ spec:
         imagePullPolicy: Always 
         ports:
         - containerPort: 80
+          name: http
         env:
           - name: ENV_BACKEND_URI
             valueFrom:
