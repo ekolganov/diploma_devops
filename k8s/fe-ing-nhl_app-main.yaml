@@ -19,25 +19,4 @@ spec:
           service:
             name: nhl-app-fe-svc
             port:
-              number: http
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nhl-app-fe-svc
-  namespace: main
-  labels:
-    instance: app
-    component: frontend
-    app: frontend    
-spec:
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: http
-  selector:
-      app: frontend
-      instance: app
-      component: frontend
-  type: ClusterIP
+              number: 80

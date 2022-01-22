@@ -4,16 +4,22 @@ metadata:
   name: nhl-app-be-deployment
   namespace: __NAMESPACE__
   labels:
-    app: backend
+    component: backend
+    instance: app
+    name: backend-nhl-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      component: backend
+      instance: app
+      name: backend-nhl-app
   template:
     metadata:
       labels:
-        app: backend
+        component: backend
+        instance: app
+        name: backend-nhl-app
     spec:
       containers:
       - name: nhl-app-be

@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nhl-apps-fe-metrics
+  labels:
+      release: monitoring
+      name: frontend-nhl-app
+      instance: app
+      component: frontend
+  namespace: monitoring
+spec:
+  endpoints:
+  - path: /metrics
+    port: http
+    interval: 30s
+  selector:
+    matchLabels:
+      name: frontend-nhl-app
+      instance: app
+      component: frontend
+  namespaceSelector:
+    matchNames:
+    - main
+    - dev

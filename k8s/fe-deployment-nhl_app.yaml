@@ -4,20 +4,20 @@ metadata:
   name: nhl-app-fe-deployment
   namespace: __NAMESPACE__
   labels:
-    app: frontend
+    name: frontend-nhl-app
     instance: app
     component: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      name: frontend-nhl-app
       instance: app
       component: frontend
   template:
     metadata:
       labels:
-        app: frontend
+        name: frontend-nhl-app
         instance: app
         component: frontend
     spec:
