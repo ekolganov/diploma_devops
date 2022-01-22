@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
   default_node_pool {
     name       = "node"
-    node_count = 1
+    node_count = 2
     vm_size    = "Standard_B4ms"
   }
 
@@ -80,12 +80,14 @@ resource "azurerm_subnet" "internal" {
   address_prefixes     = ["10.0.5.0/24"]
 }
 
+
+/*
 resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   name                   = "${var.my_name}Pool"
   resource_group_name    = azurerm_resource_group.rg.name
   location               = azurerm_resource_group.rg.location
   sku                    = "Standard_B2ms"
-  instances              = 1
+  instances              = 2
   admin_username         = "${var.my_name}"
   single_placement_group = false
   overprovision          = false
@@ -122,7 +124,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     source = "terraform"
   }
 }
-
+*/
 
 #/*
 # PGSQL

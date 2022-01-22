@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: nhl-apps-fe-metrics
+  name: nhl-app-fe-metrics
   labels:
       release: monitoring
       name: frontend-nhl-app

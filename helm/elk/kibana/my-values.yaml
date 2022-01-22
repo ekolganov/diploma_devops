@@ -1,0 +1,18 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /$1
+#    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  hosts:
+    - host: "ekolganov1.eastus.cloudapp.azure.com"
+      paths:
+        - path: /kib
+  pathtype: ImplementationSpecific
+kibanaConfig:
+  kibana.yml: |
+    server.host: localhost
+    server.basePath: /kib
+    server.rewriteBasePath: true
+healthCheckPath: "/kib/app/kibana"
