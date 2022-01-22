@@ -29,13 +29,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 metrics = PrometheusMetrics(app)
 
-metrics.register_default(
-    metrics.counter(
-        'by_path_counter', 'Request count by request paths',
-        labels={'path': lambda: request.path}
-    )
-)
-
 
 class Games(db.Model):
     """ Flask model to add in DB data """
