@@ -34,13 +34,14 @@ prometheus:
     pathType: Prefix
   prometheusSpec:
     externalUrl: "prometheus"
-#    additionalScrapeConfigs:
-#      - job_name: 'ingress-nginx-endpoints'
-#        metric_path: /metrics
-#        scrape_interval: 5s
-#        static_configs:
-#          - targets:
-#            - ingress-nginx-controller-metrics.ingress-nginx:10254
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
 defaultRules:
   rules:
     etcd: false

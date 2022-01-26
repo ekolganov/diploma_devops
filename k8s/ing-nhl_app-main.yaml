@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nhl-app-ingress-main
+  namespace: main
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  labels:
+    release: monitoring
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "ekolganov1.eastus.cloudapp.azure.com"
+    http:
+      paths:
+      - path: /(main_nhl_app|favicon.ico)
+        pathType: Prefix
+        backend:
+          service:
+            name: nhl-app-fe-svc
+            port:
+              number: 80
+      - path: /main-nhl-app-be
+        pathType: Prefix
+        backend:
+          service:
+            name: nhl-app-be-svc
+            port:
+              number: 80
