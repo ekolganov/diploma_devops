@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 
-__version__ = '0.0.22'
+__version__ = '0.1.16'
 
 PG_DB = os.environ.get("ENV_POSTGRES_DB")
 PG_USER = os.environ.get("ENV_POSTGRES_USER")
