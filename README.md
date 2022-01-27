@@ -28,12 +28,14 @@ Back-end (collects data) must:
 
 ## **URLs**
 
-http://ekolganov1.eastus.cloudapp.azure.com/main_nhl_app
-http://ekolganov1.eastus.cloudapp.azure.com/dev_nhl_app
-http://ekolganov1.eastus.cloudapp.azure.com/sonar
-http://ekolganov1.eastus.cloudapp.azure.com/jenkins/
-http://ekolganov1.eastus.cloudapp.azure.com/grafana/
-http://ekolganov1.eastus.cloudapp.azure.com/kib/
+- http://ekolganov1.eastus.cloudapp.azure.com/main_nhl_app
+- http://ekolganov1.eastus.cloudapp.azure.com/dev_nhl_app
+- http://ekolganov1.eastus.cloudapp.azure.com/sonar
+- http://ekolganov1.eastus.cloudapp.azure.com/jenkins/
+- http://ekolganov1.eastus.cloudapp.azure.com/grafana/
+- http://ekolganov1.eastus.cloudapp.azure.com/kib/
+- https://hub.docker.com/repository/docker/karamel32/nhl_app_be
+- https://hub.docker.com/repository/docker/karamel32/nhl_app
 
 ### Presentation
 in repo EKolganov_diploma.pptx
